@@ -1,12 +1,12 @@
 {
-  "name": "arslan-pairing-site",
+  "name": "dark-bot-pairing-site",
   "version": "0.0.1",
-  "description": "A multi functional whatsapp bot Web paircode Created By Anayat-AI Official.",
+  "description": "A multi functional whatsapp bot Web paircode Created By Emmaboy 26 Official.",
   "main": "arslan.js",
   "scripts": {
-    "start": "pm2 start arslan.js --deep-monitoring --attach --name Anayat-AI",
-    "stop": "pm2 stop Anayat-AI",
-    "restart": "pm2 restart Anayat-AI"
+    "start": "pm2 start arslan.js --deep-monitoring --attach --name Dark-Bot",
+    "stop": "pm2 stop Dark-Boy",
+    "restart": "pm2 restart Dark-Bot"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "npm:wileys",              
