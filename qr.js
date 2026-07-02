@@ -8,7 +8,7 @@ const fs = require('fs');
 let router = express.Router()
 const pino = require("pino");
 const {
-	default: Arslan_Tech,
+	default: Dark-Bot,
 	useMultiFileAuthState,
 	jidNormalizedUser,
 	Browsers,
@@ -28,13 +28,13 @@ const {
 } = require("node:fs/promises")
 router.get('/', async (req, res) => {
 	const id = makeid();
-	async function Arslan_MD_QR_CODE() {
+	async function Dark-Bot_QR_CODE() {
 		const {
 			state,
 			saveCreds
 		} = await useMultiFileAuthState('./temp/' + id)
 		try {
-			let Qr_Code_By_Arslan_Tech = Arslan_Tech({
+			let Qr_Code_By_Dark-Bot = Dark-Bot({
 				auth: state,
 				printQRInTerminal: false,
 				logger: pino({
@@ -43,8 +43,8 @@ router.get('/', async (req, res) => {
 				browser: Browsers.macOS("Desktop"),
 			});
 
-			Qr_Code_By_Arslan_Tech.ev.on('creds.update', saveCreds)
-			Qr_Code_By_Arslan_Tech.ev.on("connection.update", async (s) => {
+			Qr_Code_By_Dark-Bot.ev.on('creds.update', saveCreds)
+			Qr_Code_By_Dark-Bot.ev.on("connection.update", async (s) => {
 				const {
 					connection,
 					lastDisconnect,
@@ -56,50 +56,50 @@ router.get('/', async (req, res) => {
 					let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
 					await delay(800);
 				   let b64data = Buffer.from(data).toString('base64');
-				   let session = await Qr_Code_By_Arslan_Tech.sendMessage(Qr_Code_By_Arslan_Tech.user.id, { text: 'ARSLAN-MD~' + b64data });
+				   let session = await Qr_Code_By_Dark-Bot.sendMessage(Qr_Code_By_Dark-Bot.user.id, { text: 'DARK-BOT~' + b64data });
 	
-				   let Arslan_MD_TEXT = `
+				   let Dark-Bot_TEXT = `
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
-║ ✨Arslan-MD🔷
-║ ✨ArslanMD OFFICIAL🔷
+║ ✨DARK-BOT🔷
+║ ✨DARK-BOT OFFICIAL🔷
 ╚════════════════════╝
 
 
 ---
 
 ╔════════════════════◇
-║『 YOU'VE CHOSEN Arslan-MD 』
+║『 YOU'VE CHOSEN DARK-BOT 』
 ║ -Set the session ID in Heroku:
 ║ - SESSION_ID: 
 ╚════════════════════╝
 ╔════════════════════◇
 ║ 『••• _V𝗶𝘀𝗶𝘁 𝗙𝗼𝗿_H𝗲𝗹𝗽 •••』
-║❍ 𝐘𝐨𝐮𝐭𝐮𝐛𝐞: youtube.com/@arslanmdofficial
-║❍ 𝐎𝐰𝐧𝐞𝐫: 923237045919
-║❍ 𝐑𝐞𝐩𝐨: https://github.com/Arslan-MD/Arslan_MD 
-║❍ 𝐖𝐚𝐆𝗿𝐨𝐮𝐩: https://chat.whatsapp.com/KRyARlvcUjoIv1CPSSyQA5?mode=wwt
-║❍ 𝐖𝐚𝐂𝐡𝐚𝐧𝐧𝐞𝐥: https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306
-║❍ 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦: _https://www.instagram.com/arslanmd
+║❍ 𝐘𝐨𝐮𝐭𝐮𝐛𝐞: youtube.com/@
+║❍ 𝐎𝐰𝐧𝐞𝐫: +2348132990186
+║❍ 𝐑𝐞𝐩𝐨: https://github.com/adediji-emmanuel/Dark-Bot 
+║❍ 𝐖𝐚𝐆𝗿𝐨𝐮𝐩: https://chat.whatsapp.com/
+║❍ 𝐖𝐚𝐂𝐡𝐚𝐧𝐧𝐞𝐥: https://whatsapp.com/channel/
+║❍ 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦: _https://www.instagram.com/
 ║ ☬ ☬ ☬ ☬
 ╚═════════════════════╝
-𒂀 Enjoy Arslan-MD
+𒂀 Enjoy DARK-BOT
 
 
 ---
 
 Don't Forget To Give Star⭐ To My Repo
 ______________________________`;
-	 await Qr_Code_By_Arslan_Tech.sendMessage(Qr_Code_By_Arslan_Tech.user.id,{text:Arslan_MD_TEXT},{quoted:session})
+	 await Qr_Code_By_Dark-Bot.sendMessage(Qr_Code_By_Dark-Bot.user.id,{text:Dark-Bot_TEXT},{quoted:session})
 
 
 
 					await delay(100);
-					await Qr_Code_By_Arslan_Tech.ws.close();
+					await Qr_Code_By_Dark-Bot.ws.close();
 					return await removeFile("temp/" + id);
 				} else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
 					await delay(10000);
-					Arslan_MD_QR_CODE();
+					Dark-Bot_QR_CODE();
 				}
 			});
 		} catch (err) {
@@ -108,10 +108,9 @@ ______________________________`;
 					code: "Service is Currently Unavailable"
 				});
 			}
-			console.log(err);
-			await removeFile("temp/" + id);
+			console.l/" + id);
 		}
 	}
-	return await Arslan_MD_QR_CODE()
+	return await Dark-Bot_QR_CODE()
 });
 module.exports = router
