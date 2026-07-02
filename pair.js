@@ -6,7 +6,7 @@ const fs = require('fs');
 let router = express.Router();
 const pino = require('pino');
 const {
-    default: Anayat-ai,
+    default: Dark-Bot,
     useMultiFileAuthState,
     delay,
     makeCacheableSignalKeyStore,
@@ -22,10 +22,10 @@ router.get('/', async (req, res) => {
     const id = makeid();
     let num = req.query.number;
     
-    async function ANAYAT-AI_PAIR_CODE() {
+    async function DARK-BOT_PAIR_CODE() {
         const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
         try {
-            let Pair_Code_By_Anayat-ai = Anayat-ai({
+            let Pair_Code_By_Dark-Bot = Dark-Bot({
                 auth: {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'fatal' }).child({ level: 'fatal' })),
@@ -35,51 +35,51 @@ router.get('/', async (req, res) => {
                 browser: Browsers.macOS('Chrome')
             });
 
-            if (!Pair_Code_By_Anayat-ai.authState.creds.registered) {
+            if (!Pair_Code_By_Dark-Bot.authState.creds.registered) {
                 await delay(1500);
                 num = num.replace(/[^0-9]/g, '');
-                const code = await Pair_Code_By_Anayat-ai.requestPairingCode(num);
+                const code = await Pair_Code_By_Dark-Bot.requestPairingCode(num);
                 if (!res.headersSent) {
                     await res.send({ code });
                 }
             }
 
-            Pair_Code_By_Anayat-ai.ev.on('creds.update', saveCreds);
-            Pair_Code_By_Anayat-ai.ev.on('connection.update', async (s) => {
+            Pair_Code_By_Dark-Boy.ev.on('creds.update', saveCreds);
+            Pair_Code_By_Dark-Bot.ev.on('connection.update', async (s) => {
                 const { connection, lastDisconnect } = s;
                 if (connection === 'open') {
                     await delay(5000);
                     let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
                     await delay(800);
                     let b64data = Buffer.from(data).toString('base64');
-                    let session = await Pair_Code_By_Anayat-ai.sendMessage(Pair_Code_By_Anayat-ai.user.id, { text: 'ANAYAT-AI~' + b64data });
+                    let session = await Pair_Code_By_Dark-Bot.sendMessage(Pair_Code_By_Dark-Bot.user.id, { text: 'DARK-BOT~' + b64data });
 
-                    let Anayat-ai_TEXT = `
+                    let Dark-Bot_TEXT = `
         
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
-║ ✨ Anayat-AI 🔷
-║ ✨ ANAYAT-AI OFFICIAL🔷
+║ ✨ DARK-BOT 🔷
+║ ✨ DARK-BOT OFFICIAL🔷
 ╚════════════════════╝
 
 
 ---
 
 ╔════════════════════◇
-║『 YOU'VE CHOSEN Anayat-AI 』
+║『 YOU'VE CHOSEN Dark-Bot 』
 ║ -Set the session ID in Heroku:
 ║ - SESSION_ID: 
 ╚════════════════════╝
 ╔════════════════════◇
 ║ 『••• _V𝗶𝘀𝗶𝘁 𝗙𝗼𝗿_H𝗲𝗹𝗽 •••』
-║❍ 𝐎𝐰𝐧𝐞𝐫: 923452401207
-║❍ 𝐑𝐞𝐩𝐨: https://github.com/ANAYAT-AI/ANAYAT-AI
-║❍ 𝐖𝐚𝐆𝗿𝐨𝐮𝐩: https://chat.whatsapp.com/EkhNB5mWD8c8KTc0oaHv0J?mode=gi_t
-║❍ 𝐖𝐚𝐂𝐡𝐚𝐧𝐧𝐞𝐥: https://whatsapp.com/channel/0029VbAm8LqL2ATpxklIct2g
+║❍ 𝐎𝐰𝐧𝐞𝐫: +2348132990186
+║❍ 𝐑𝐞𝐩𝐨: https://github.com/adediji-emmanuel/Dark-Bot
+║❍ 𝐖𝐚𝐆𝗿𝐨𝐮𝐩: https://chat.whatsapp.com/
+║❍ 𝐖𝐚𝐂𝐡𝐚𝐧𝐧𝐞𝐥: https://whatsapp.com/channel/
 ║
 ║ ☬ ☬ ☬ ☬
 ╚═════════════════════╝
-𒂀 Enjoy Anayat-AI
+𒂀 Enjoy Dark-Bot
 
 
 ---
@@ -87,14 +87,14 @@ router.get('/', async (req, res) => {
 Don't Forget To Give Star⭐ To My Repo
 ______________________________`;
 
-                    await Pair_Code_By_AAnayat-ai.sendMessage(Pair_Code_By_Anayat-ai.user.id, { text: Toxic_MD_TEXT }, { quoted: session });
+                    await Pair_Code_By_Dark-Bot.sendMessage(Pair_Code_By_Dark-Boy.user.id, { text: Toxic_MD_TEXT }, { quoted: session });
 
                     await delay(100);
-                    await Pair_Code_By_Anayat-ai.ws.close();
+                    await Pair_Code_By_Dark-Bot.ws.close();
                     return await removeFile('./temp/' + id);
                 } else if (connection === 'close' && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
                     await delay(10000);
-                    Anayat-AI_PAIR_CODE();
+                    Dark-Bot_PAIR_CODE();
                 }
             });
         } catch (err) {
@@ -106,7 +106,7 @@ ______________________________`;
         }
     }
     
-    return await Anayat-AI_PAIR_CODE();
+    return await Dark-Bot_PAIR_CODE();
 });
 
 module.exports = router;
