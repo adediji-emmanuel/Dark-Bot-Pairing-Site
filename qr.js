@@ -108,7 +108,7 @@ ______________________________`;
 					code: "Service is Currently Unavailable"
 				});
 			}
-			console.l/" + id);
+			console.log("Error in QR route:", err);
 		}
 	}
 	return await DarkBot_QR_CODE()
