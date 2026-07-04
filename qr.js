@@ -8,7 +8,7 @@ const fs = require('fs');
 let router = express.Router()
 const pino = require("pino");
 const {
-	default: Dark-Bot,
+	default: DarkBot,
 	useMultiFileAuthState,
 	jidNormalizedUser,
 	Browsers,
@@ -28,13 +28,13 @@ const {
 } = require("node:fs/promises")
 router.get('/', async (req, res) => {
 	const id = makeid();
-	async function Dark-Bot_QR_CODE() {
+	async function DarkBot_QR_CODE() {
 		const {
 			state,
 			saveCreds
 		} = await useMultiFileAuthState('./temp/' + id)
 		try {
-			let Qr_Code_By_Dark-Bot = Dark-Bot({
+			let Qr_Code_By_DarkBot = DarkBot({
 				auth: state,
 				printQRInTerminal: false,
 				logger: pino({
@@ -43,8 +43,8 @@ router.get('/', async (req, res) => {
 				browser: Browsers.macOS("Desktop"),
 			});
 
-			Qr_Code_By_Dark-Bot.ev.on('creds.update', saveCreds)
-			Qr_Code_By_Dark-Bot.ev.on("connection.update", async (s) => {
+			Qr_Code_By_DarkBot.ev.on('creds.update', saveCreds)
+			Qr_Code_By_DarkBot.ev.on("connection.update", async (s) => {
 				const {
 					connection,
 					lastDisconnect,
@@ -56,9 +56,9 @@ router.get('/', async (req, res) => {
 					let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
 					await delay(800);
 				   let b64data = Buffer.from(data).toString('base64');
-				   let session = await Qr_Code_By_Dark-Bot.sendMessage(Qr_Code_By_Dark-Bot.user.id, { text: 'DARK-BOT~' + b64data });
+				   let session = await Qr_Code_By_DarkBot.sendMessage(Qr_Code_By_DarkBot.user.id, { text: 'DARKBOT~' + b64data });
 	
-				   let Dark-Bot_TEXT = `
+				   let DarkBot_TEXT = `
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
 ║ ✨DARK-BOT🔷
@@ -90,16 +90,16 @@ router.get('/', async (req, res) => {
 
 Don't Forget To Give Star⭐ To My Repo
 ______________________________`;
-	 await Qr_Code_By_Dark-Bot.sendMessage(Qr_Code_By_Dark-Bot.user.id,{text:Dark-Bot_TEXT},{quoted:session})
+	 await Qr_Code_By_DarkBot.sendMessage(Qr_Code_By_DarkBot.user.id,{text:DarkBot_TEXT},{quoted:session})
 
 
 
 					await delay(100);
-					await Qr_Code_By_Dark-Bot.ws.close();
+					await Qr_Code_By_DarkBot.ws.close();
 					return await removeFile("temp/" + id);
 				} else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
 					await delay(10000);
-					Dark-Bot_QR_CODE();
+					DarkBot_QR_CODE();
 				}
 			});
 		} catch (err) {
@@ -111,6 +111,6 @@ ______________________________`;
 			console.l/" + id);
 		}
 	}
-	return await Dark-Bot_QR_CODE()
+	return await DarkBot_QR_CODE()
 });
 module.exports = router
