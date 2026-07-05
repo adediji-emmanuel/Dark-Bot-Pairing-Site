@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Dark-Bot Sessions | Ultra Pro Max</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -15,296 +15,237 @@
     }
 
     :root {
-      --neon-cyan: #00ffcc;
-      --neon-pink: #ff2e63;
-      --neon-purple: #7209b7;
-      --neon-blue: #4361ee;
-      --dark-bg: #0a0a0a;
-      --card-bg: rgba(15, 15, 25, 0.8);
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent: #00d4ff;
+      --dark-bg: #0f0f1e;
+      --card-bg: rgba(25, 25, 45, 0.7);
+      --border-color: rgba(102, 126, 234, 0.2);
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0d0;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--dark-bg);
-      color: var(--neon-cyan);
-      min-height: 100vh;
+      color: var(--text-primary);
+      line-height: 1.6;
       position: relative;
       overflow-x: hidden;
     }
 
-    /* Advanced Particle Background */
-    #particles-js {
+    /* Background Effects */
+    .background-effects {
       position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       z-index: -2;
-      background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 100%);
+      pointer-events: none;
     }
 
-    /* Animated Grid Overlay */
-    .cyber-grid {
+    .gradient-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.1;
+    }
+
+    .blob-1 {
+      width: 400px;
+      height: 400px;
+      background: #667eea;
+      top: -100px;
+      left: -100px;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .blob-2 {
+      width: 350px;
+      height: 350px;
+      background: #764ba2;
+      bottom: -50px;
+      right: -50px;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, -30px); }
+    }
+
+    /* Grid Background */
+    .grid-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: 
-        linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+      background-image: 
+        linear-gradient(rgba(102, 126, 234, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(102, 126, 234, 0.05) 1px, transparent 1px);
       background-size: 50px 50px;
-      animation: gridMove 40s linear infinite;
-      opacity: 0.5;
     }
 
-    @keyframes gridMove {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(-50px, -50px); }
-    }
-
-    /* 3D Profile Section */
-    .profile-section {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0 40px;
-      position: relative;
-      z-index: 10;
-      perspective: 1000px;
-    }
-
-    .profile-container {
-      width: 200px;
-      height: 200px;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: float3d 6s ease-in-out infinite;
-    }
-
-    .profile-image {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      position: absolute;
-      box-shadow: 
-        0 0 30px var(--neon-cyan),
-        inset 0 0 30px rgba(0, 255, 204, 0.3);
-      border: 3px solid var(--neon-cyan);
-      transform: translateZ(20px);
-      animation: rotate3d 20s linear infinite;
-    }
-
-    .profile-border {
-      position: absolute;
-      width: 110%;
-      height: 110%;
-      top: -5%;
-      left: -5%;
-      border-radius: 50%;
-      background: conic-gradient(
-        from 0deg,
-        var(--neon-pink),
-        var(--neon-purple),
-        var(--neon-blue),
-        var(--neon-cyan),
-        var(--neon-pink)
-      );
-      animation: rotate 4s linear infinite;
-      box-shadow: 0 0 40px rgba(255, 46, 99, 0.5);
-    }
-
-    .profile-border::before {
-      content: '';
-      position: absolute;
-      width: 94%;
-      height: 94%;
-      top: 3%;
-      left: 3%;
-      background: var(--dark-bg);
-      border-radius: 50%;
-      z-index: -1;
-    }
-
-    @keyframes float3d {
-      0%, 100% { transform: translateY(0) rotateX(5deg) rotateY(5deg); }
-      50% { transform: translateY(-20px) rotateX(-5deg) rotateY(-5deg); }
-    }
-
-    @keyframes rotate3d {
-      0% { transform: translateZ(20px) rotateY(0deg); }
-      100% { transform: translateZ(20px) rotateY(360deg); }
-    }
-
-    /* Container */
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 50px;
-      position: relative;
-      z-index: 1;
-      margin-top: 80px;
-    }
-
-    /* Enhanced News Ticker */
-    .news-container {
+    /* Header Navigation */
+    header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      font-family: 'Orbitron', sans-serif;
-      background: rgba(10, 10, 20, 0.9);
+      padding: 1.5rem 2rem;
       backdrop-filter: blur(10px);
-      border-bottom: 2px solid var(--neon-cyan);
-      box-shadow: 0 5px 30px rgba(0, 255, 204, 0.3);
-    }
-
-    .news-container .title {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 40%;
-      background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
-      padding: 12px 24px;
-      color: #fff;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-      z-index: 1001;
-      font-size: 1.1rem;
-      box-shadow: 0 0 20px rgba(255, 46, 99, 0.5);
-    }
-
-    .news-container .ticker {
-      width: 100%;
-      overflow: hidden;
-      margin-left: 40%;
-    }
-
-    .news-container ul {
+      background: rgba(15, 15, 30, 0.8);
+      border-bottom: 1px solid var(--border-color);
       display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 12px 0;
-      animation: scroll 25s infinite linear;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .news-container ul li {
-      white-space: nowrap;
-      padding: 0 30px;
-      color: var(--neon-cyan);
-      font-size: 1.1rem;
-      font-weight: 600;
-      text-shadow: 0 0 10px var(--neon-cyan);
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
       position: relative;
     }
 
-    .news-container ul li::after {
-      content: "✦";
+    .nav-links a::after {
+      content: '';
       position: absolute;
-      top: 50%;
-      right: -5px;
-      transform: translateY(-50%);
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px var(--neon-pink);
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-gradient);
+      transition: var(--transition);
     }
 
-    @keyframes scroll {
-      from { transform: translateX(100%); }
-      to { transform: translateX(-100%); }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 120px 2rem 4rem;
+      position: relative;
+      z-index: 1;
     }
 
     /* Hero Section */
     .hero {
       text-align: center;
-      padding: 60px 40px;
-      background: var(--card-bg);
-      border: 2px solid var(--neon-cyan);
-      border-radius: 20px;
-      box-shadow: 
-        0 0 40px rgba(0, 255, 204, 0.4),
-        inset 0 0 40px rgba(0, 255, 204, 0.1);
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      transform-style: preserve-3d;
-      transform: translateZ(0);
-      transition: all 0.5s ease;
+      margin-bottom: 6rem;
+      animation: fadeInUp 0.8s ease-out;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        45deg,
-        transparent,
-        rgba(0, 255, 204, 0.1),
-        transparent
-      );
-      transform: rotate(45deg);
-      animation: shine 6s infinite;
+    .profile-avatar {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      object-fit: cover;
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+      animation: pulse-glow 3s ease-in-out infinite;
     }
 
-    .hero:hover {
-      transform: translateY(-10px) translateZ(10px);
-      box-shadow: 
-        0 15px 50px rgba(0, 255, 204, 0.6),
-        inset 0 0 50px rgba(0, 255, 204, 0.2);
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.3); }
+      50% { box-shadow: 0 0 60px rgba(0, 212, 255, 0.5); }
     }
 
-    .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3.5rem;
-      background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+      background: var(--secondary-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(255, 46, 99, 0.5);
-      margin-bottom: 20px;
-      letter-spacing: 2px;
-      font-weight: 900;
+      letter-spacing: -1px;
     }
 
-    .hero p {
-      font-size: 1.3rem;
-      color: var(--neon-cyan);
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.6;
-      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.8;
     }
 
-    /* Features Section */
-    .features {
+    /* Features Grid */
+    .features-section {
+      margin-bottom: 6rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 3rem;
+      text-align: center;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      width: 100%;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
     }
 
     .feature-card {
       background: var(--card-bg);
-      border: 2px solid var(--neon-cyan);
-      border-radius: 15px;
-      padding: 30px;
-      text-align: center;
-      transition: all 0.5s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: var(--transition);
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
       backdrop-filter: blur(10px);
-      transform-style: preserve-3d;
-      transform: translateZ(0);
     }
 
     .feature-card::before {
@@ -314,13 +255,8 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(0, 255, 204, 0.1),
-        transparent
-      );
-      transition: left 0.7s ease;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
     }
 
     .feature-card:hover::before {
@@ -328,475 +264,369 @@
     }
 
     .feature-card:hover {
-      transform: translateY(-15px) translateZ(20px) rotateX(5deg);
-      box-shadow: 
-        0 20px 40px rgba(0, 255, 204, 0.4),
-        inset 0 0 30px rgba(0, 255, 204, 0.1);
-      border-color: var(--neon-pink);
+      transform: translateY(-10px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      background: var(--secondary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .feature-card h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      color: var(--neon-pink);
-      margin-bottom: 15px;
-      text-shadow: 0 0 15px rgba(255, 46, 99, 0.5);
+      font-size: 1.5rem;
       font-weight: 700;
     }
 
     .feature-card p {
-      font-size: 1.1rem;
-      color: var(--neon-cyan);
+      color: var(--text-secondary);
+      font-size: 0.95rem;
       flex-grow: 1;
-      line-height: 1.6;
-    }
-
-    .feature-card .btn {
-      width: 100%;
-      padding: 1.2em;
-      font-size: 1.1rem;
-      margin-top: auto;
-    }
-
-    /* About & Contact Sections */
-    .about, .contact {
-      background: var(--card-bg);
-      border: 2px solid var(--neon-cyan);
-      border-radius: 15px;
-      padding: 40px;
-      text-align: center;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      transition: all 0.5s ease;
-    }
-
-    .about:hover, .contact:hover {
-      transform: translateY(-10px);
-      box-shadow: 
-        0 15px 40px rgba(0, 255, 204, 0.4),
-        inset 0 0 40px rgba(0, 255, 204, 0.1);
-    }
-
-    .about h2, .contact h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-      font-weight: 800;
-    }
-
-    .about p, .contact p {
-      font-size: 1.2rem;
-      color: var(--neon-cyan);
-      max-width: 900px;
-      margin: 0 auto;
-      line-height: 1.7;
     }
 
     /* Buttons */
     .btn {
-      background: transparent;
-      border: 2px solid var(--neon-cyan);
-      border-radius: 12px;
+      padding: 0.9rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      border: none;
       cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 10px var(--neon-cyan);
-      transition: all 0.4s ease;
+      transition: var(--transition);
+      font-size: 0.95rem;
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
       position: relative;
       overflow: hidden;
-      font-weight: 700;
-      letter-spacing: 1px;
-      padding: 1em 1.5em;
     }
 
-    .btn::before, .btn::after {
+    .btn::before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.4), transparent);
-      transition: all 0.6s ease;
-    }
-
-    .btn::after {
-      left: 100%;
-      transition-delay: 0.2s;
+      background: rgba(255, 255, 255, 0.1);
+      transition: left 0.4s ease;
     }
 
     .btn:hover::before {
       left: 100%;
     }
 
-    .btn:hover::after {
-      left: -100%;
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+      width: 100%;
     }
 
-    .btn:hover {
-      background: rgba(0, 255, 204, 0.15);
-      box-shadow: 
-        0 0 25px rgba(0, 255, 204, 0.7),
-        inset 0 0 15px rgba(0, 255, 204, 0.2);
-      color: #fff;
-      border-color: #fff;
+    .btn-primary:hover {
       transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
     }
 
-    .btn:active {
-      transform: scale(0.97);
-      filter: brightness(1.2);
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 212, 255, 0.1);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+
+    /* Info Sections */
+    .info-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+
+    .info-section:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.15);
+    }
+
+    .info-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .info-section p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 1.05rem;
     }
 
     /* Footer */
-    .footer {
-      margin-top: 60px;
-      padding: 30px;
-      background: var(--card-bg);
-      border: 2px solid var(--neon-cyan);
-      border-radius: 15px;
-      text-align: center;
-      color: var(--neon-cyan);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1rem;
-      text-shadow: 0 0 10px var(--neon-cyan);
-      width: 100%;
+    footer {
+      background: rgba(15, 15, 30, 0.9);
+      border-top: 1px solid var(--border-color);
+      padding: 4rem 2rem;
+      margin-top: 6rem;
       backdrop-filter: blur(10px);
     }
 
-    .footer b {
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px rgba(255, 46, 99, 0.5);
-    }
-
-    .footer .social-links {
-      margin-top: 25px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 25px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .footer .social-links a {
-      color: var(--neon-cyan);
-      font-size: 2rem;
-      transition: all 0.4s ease;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: 2px solid var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+    .footer-content {
+      max-width: 1400px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
     }
 
-    .footer .social-links a:hover {
-      color: var(--neon-pink);
-      text-shadow: 0 0 15px var(--neon-pink);
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 25px rgba(255, 46, 99, 0.7);
-      transform: translateY(-5px) scale(1.1);
+    .footer-section h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .footer-section p, .footer-section a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-section a:hover {
+      color: var(--accent);
+      transform: translateX(5px);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-links a {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(102, 126, 234, 0.2);
+      border: 1px solid var(--border-color);
+      color: var(--accent);
+      font-size: 1.1rem;
+      transition: var(--transition);
+      margin: 0 !important;
+    }
+
+    .social-links a:hover {
+      background: var(--primary-gradient);
+      transform: translateY(-5px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-secondary);
     }
 
     /* Animations */
-    @keyframes shine {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     /* Responsive Design */
-    @media (max-width: 1024px) {
-      .features {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .hero h1 {
-        font-size: 2.8rem;
-      }
-    }
-
     @media (max-width: 768px) {
-      .container {
-        padding: 15px;
-        margin-top: 100px;
-        gap: 40px;
+      header {
+        padding: 1rem 1.5rem;
       }
 
-      .news-container .title {
-        width: 50%;
-        font-size: 0.9rem;
-        padding: 10px 15px;
-      }
-
-      .news-container .ticker {
-        margin-left: 50%;
-      }
-
-      .news-container ul li {
-        font-size: 0.9rem;
-        padding: 0 20px;
-      }
-
-      .hero {
-        padding: 40px 20px;
-      }
-
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-
-      .hero p {
+      .logo-text {
         font-size: 1.1rem;
       }
 
-      .features {
-        grid-template-columns: 1fr;
-        gap: 25px;
+      .nav-links {
+        display: none;
       }
 
-      .feature-card {
-        padding: 25px;
+      .container {
+        padding: 100px 1.5rem 3rem;
       }
 
-      .feature-card h3 {
-        font-size: 1.5rem;
-      }
-
-      .about, .contact {
-        padding: 30px 20px;
-      }
-
-      .about h2, .contact h2 {
+      .hero-title {
         font-size: 2rem;
       }
 
-      .about p, .contact p {
-        font-size: 1.1rem;
+      .section-title {
+        font-size: 1.8rem;
       }
 
-      .profile-container {
-        width: 160px;
-        height: 160px;
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
 
-      .footer .social-links {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+      .info-section {
+        padding: 2rem;
       }
 
-      .footer .social-links a {
-        width: 60px;
-        height: 60px;
-        font-size: 1.7rem;
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
       }
     }
 
     @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 1.8rem;
+      .container {
+        padding: 90px 1rem 2rem;
       }
-      
-      .profile-container {
-        width: 140px;
-        height: 140px;
+
+      .hero-title {
+        font-size: 1.5rem;
       }
-      
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
       .btn {
-        font-size: 1rem;
-        padding: 0.9em 1.2em;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Advanced Particle Background -->
-  <div id="particles-js"></div>
-  <div class="cyber-grid"></div>
-
-  <!-- Enhanced News Ticker -->
-  <div class="news-container">
-    <div class="title">🚀 DARK-BOT Ultra Pro Max</div>
-    <div class="ticker">
-      <ul>
-        <li>Welcome to the Ultimate Session Experience!</li>
-        <li>Get your QR Codes & Pairing Codes Instantly</li>
-        <li>DSF CREW DEVS - Premium Quality</li>
-        <li>Advanced Security & Lightning Fast Performance</li>
-      </ul>
-    </div>
+  <!-- Background Effects -->
+  <div class="background-effects">
+    <div class="gradient-blob blob-1"></div>
+    <div class="gradient-blob blob-2"></div>
   </div>
+  <div class="grid-bg"></div>
 
+  <!-- Header -->
+  <header>
+    <div class="logo-section">
+      <img src="https://files.catbox.moe/7sfhxn.jpeg" alt="DARK-BOT" class="logo">
+      <div class="logo-text">DARK-BOT</div>
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
   <div class="container">
-    <!-- 3D Profile Section -->
-    <div class="profile-section">
-      <div class="profile-container">
-        <div class="profile-border"></div>
-        <img src="https://files.catbox.moe/7sfhxn.jpeg" alt="DARK-BOT" class="profile-image">
-      </div>
-    </div>
-
     <!-- Hero Section -->
-    <div class="hero">
-      <h1>ULTRA PRO MAX SESSIONS</h1>
-      <p>Experience the next generation of WhatsApp bot sessions. Get your QR or pair code, deploy DARK-BOT with advanced features, and join the elite tech community!</p>
-    </div>
+    <section class="hero">
+      <img src="https://files.catbox.moe/7sfhxn.jpeg" alt="DARK-BOT" class="profile-avatar">
+      <h1 class="hero-title">ULTRA PRO MAX SESSIONS</h1>
+      <p class="hero-subtitle">Experience the next generation of WhatsApp bot sessions. Get your QR or pair code, deploy DARK-BOT with advanced features, and join the elite tech community!</p>
+    </section>
 
     <!-- Features Section -->
-    <div class="features">
-      <div class="feature-card">
-        <h3><i class="fas fa-qrcode"></i> QR Code Pairing</h3>
-        <p>Advanced QR code system with instant scanning and secure session ID generation. Lightning fast connection with enhanced security protocols.</p>
-        <button onclick="window.location.href='/qr'" class="btn">Get Premium QR</button>
+    <section class="features-section" id="features">
+      <h2 class="section-title">Premium Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
+          <h3>QR Code Pairing</h3>
+          <p>Advanced QR code system with instant scanning and secure session ID generation. Lightning fast connection with enhanced security protocols.</p>
+          <a href="/qr" class="btn btn-primary">Get QR Code</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-key"></i></div>
+          <h3>Pair Code System</h3>
+          <p>Enter your number and receive an encrypted pairing code. No scanning required. Advanced encryption ensures maximum security.</p>
+          <a href="/pair" class="btn btn-primary">Generate Code</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+          <h3>Deploy DARK-BOT</h3>
+          <p>One-click deployment with advanced features. Get your own bot running in minutes with premium functionality and 24/7 support.</p>
+          <a href="https://github.com/adediji-emmanuel/Dark-Bot" class="btn btn-primary" target="_blank">Deploy Now</a>
+        </div>
       </div>
-      <div class="feature-card">
-        <h3><i class="fas fa-key"></i> Pair Code System</h3>
-        <p>Enter your number and receive an encrypted pairing code. No scanning required. Advanced encryption ensures maximum security.</p>
-        <button onclick="window.location.href='/pair'" class="btn">Generate Code</button>
-      </div>
-      <div class="feature-card">
-        <h3><i class="fas fa-rocket"></i> Deploy DARK-BOT</h3>
-        <p>One-click deployment with advanced features. Get your own bot running in minutes with premium functionality and 24/7 support.</p>
-        <button onclick="window.location.href='https://github.com/adediji-emmanuel/Dark-Bot'" class="btn">Deploy Now</button>
-      </div>
-    </div>
+    </section>
 
     <!-- About Section -->
-    <div class="about">
+    <section class="info-section" id="about">
       <h2>About Ultra Pro Max</h2>
-      <p>We're revolutionizing the WhatsApp bot experience with cutting-edge technology. Our Ultra Pro Max version delivers unprecedented performance, security, and features. Join thousands of satisfied users who have upgraded to the premium Arslan-MD experience.</p>
-    </div>
+      <p>We're revolutionizing the WhatsApp bot experience with cutting-edge technology. Our Ultra Pro Max version delivers unprecedented performance, security, and features. Join thousands of satisfied users and experience the power of automation. With our advanced algorithms and 24/7 monitoring, your bot will always be at peak performance. Our premium support team is ready to assist you with any questions or issues.</p>
+    </section>
 
-    <!-- Contact Section -->
-    <div class="contact">
+    <!-- Support Section -->
+    <section class="info-section" id="support">
       <h2>Elite Support</h2>
-      <p>Our premium support team is available 24/7 to assist you with any issues. Contact us via SMS, WhatsApp, or Telegram for instant assistance with deployment, troubleshooting, or custom requests.</p>
-    </div>
+      <p>Our premium support team is available 24/7 to assist you with any issues. Contact us via SMS, WhatsApp, or Telegram for instant assistance with deployment, troubleshooting, or custom requests. We pride ourselves on rapid response times and comprehensive solutions. Whether you're a beginner or advanced user, we have the expertise to help you succeed with DARK-BOT.</p>
+    </section>
   </div>
 
   <!-- Footer -->
-  <div class="footer">
-    <p>© 2026 Emmaboy 26 | Ultra Pro Max Edition</p>
-    <p>Contact <b>DARK-BOT Official</b> for Premium Support</p>
-    <div class="social-links">
-      <a href="https://youtube.com/@" target="_blank"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://t.me/" target="_blank"><i class="fab fa-telegram"></i></a>
-      <a href="https://github.com/adediji-emmanuel" target="_blank"><i class="fab fa-github"></i></a>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="/qr">QR Code</a>
+        <a href="/pair">Pairing Code</a>
+        <a href="https://github.com/adediji-emmanuel/Dark-Bot" target="_blank">GitHub Repository</a>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p><strong>Owner:</strong> Emmaboy 26</p>
+        <p><strong>Email Support</strong></p>
+        <a href="https://github.com/adediji-emmanuel" target="_blank">GitHub Profile</a>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="https://youtube.com/@" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.instagram.com/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://t.me/" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+          <a href="https://github.com/adediji-emmanuel" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- Particle.js -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    // Advanced particle configuration
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 120, density: { enable: true, value_area: 800 } },
-        color: { value: ["#00ffcc", "#ff2e63", "#7209b7", "#4361ee"] },
-        shape: { 
-          type: ["circle", "triangle", "polygon"],
-          polygon: { nb_sides: 6 }
-        },
-        opacity: { 
-          value: 0.7, 
-          random: true,
-          anim: { enable: true, speed: 1, opacity_min: 0.2, sync: false }
-        },
-        size: { 
-          value: 3, 
-          random: true,
-          anim: { enable: true, speed: 4, size_min: 0.3, sync: false }
-        },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#00ffcc",
-          opacity: 0.4,
-          width: 1.5
-        },
-        move: {
-          enable: true,
-          speed: 2,
-          direction: "none",
-          random: true,
-          straight: false,
-          out_mode: "out",
-          bounce: false,
-          attract: { enable: true, rotateX: 600, rotateY: 1200 }
-        }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: true, mode: "push" },
-          resize: true
-        },
-        modes: {
-          repulse: { distance: 100, duration: 0.4 },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
-
-    // Add scroll animations
-    document.addEventListener('DOMContentLoaded', function() {
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
-
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      }, observerOptions);
-
-      // Observe all feature cards and sections
-      document.querySelectorAll('.feature-card, .about, .contact, .hero').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        observer.observe(el);
-      });
-    });
-  </script>
-
-  <!-- GetButton.io widget -->
-  <script type="text/javascript">
-    (function () {
-      var options = {
-        sms: "+2349026493415",
-        sms_color: "#129BF4",
-        whatsapp: "+2348132990186",
-        telegram: "@",
-        call_to_action: "Premium Support",
-        button_color: "#FF318E",
-        position: "left",
-        order: "sms,whatsapp,telegram",
-        pre_filled_message: "Hello Emmaboy 26! I need assistance with the Ultra Pro Max version.",
-      };
-      var proto = 'https:', host = "getbutton.io", url = proto + '//static.' + host;
-      var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
-      s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
-      var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
-    })();
-  </script>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Emmaboy 26 | DARK-BOT Ultra Pro Max Edition | All Rights Reserved</p>
+    </div>
+  </footer>
 </body>
 </html>
