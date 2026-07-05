@@ -73,7 +73,7 @@ router.get('/', async (req, res) => {
                     );
 
                     let DarkBot_TEXT = `
-
+<img src="https://files.catbox.moe/7sfhxn.jpeg" alt="DARK-BOT bot Logo" class="logo-img">
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
 ║ ✨ DARK-BOT 🔷
