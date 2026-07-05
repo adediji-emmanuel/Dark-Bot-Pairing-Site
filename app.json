@@ -3,7 +3,7 @@
     "name": "DARK-BOT",
     "description": "A whatsApp bot based on Baileysjs linrary (Ts+Js) with Multi Device support",
     "repository": "https://github.com/adediji-emmanuel/DARK-BOT-Pairing-Site",
-    "logo": "https://files.catbox.moe/a6chsf.jpg",
+    "logo": "https://files.catbox.moe/7sfhxn.jpeg",
     "keywords": ["nodejs", "bot", "whatsapp bot", "whatsapp automation", "multi device"],
     "buildpacks": [
       {
@@ -14,6 +14,9 @@
     },
     {
       "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
-          }
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-activestorage-preview.git"
+    }
      ]
 } 
