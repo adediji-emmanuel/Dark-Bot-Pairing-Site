@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DARK-BOT QR Code Pairing - Ultra Pro Max</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent: #00d4ff;
+      --dark-bg: #0f0f1e;
+      --card-bg: rgba(25, 25, 45, 0.7);
+      --border-color: rgba(102, 126, 234, 0.2);
+      --text: #ffffff;
+      --text-muted: #b0b0d0;
+      --highlight: #00FFFF;
+      --highlight-glow: 0 0 20px rgba(0, 255, 255, 0.7);
+      --radius: 20px;
+      --blur: 15px;
+      --transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--dark-bg);
+      padding: 100px 20px 150px;
+    }
+
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -3;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+      animation: bgPulse 15s ease-in-out infinite;
+    }
+
+    @keyframes bgPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Grid Background */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background-image: 
+        linear-gradient(rgba(102, 126, 234, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(102, 126, 234, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    /* Header with logo */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(15, 15, 30, 0.8);
+      backdrop-filter: blur(var(--blur));
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .logo-img {
+      height: 50px;
+      width: 50px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      box-shadow: var(--highlight-glow);
+      animation: logoSpin 10s linear infinite;
+    }
+
+    @keyframes logoSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .logo-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 900;
+      background: var(--primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+
+    /* Main container */
+    .main-content {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* QR Code box */
+    .box {
+      background: var(--card-bg);
+      backdrop-filter: blur(var(--blur));
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary);
+    }
+
+    .box:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), var(--highlight-glow);
+      border-color: var(--accent);
+    }
+
+    .box h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      background: var(--primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .box h5 {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-weight: normal;
+      font-size: 1.1rem;
+    }
+
+    /* Button styling */
+    .button-container {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1.8rem;
+      justify-content: center;
+    }
+
+    .button-container button {
+      padding: 1.2rem 2rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+    }
+
+    .button-container button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), var(--highlight-glow);
+    }
+
+    .button-container button:active {
+      transform: translateY(-2px);
+    }
+
+    .button-container button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* QR Code display container */
+    .qr-display {
+      margin-top: 2rem;
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid var(--border-color);
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .qr-display:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    }
+
+    .qr-display img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+      animation: qrPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes qrPulse {
+      0%, 100% { 
+        box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+      }
+      50% { 
+        box-shadow: 0 0 50px rgba(0, 212, 255, 0.6);
+      }
+    }
+
+    .qr-status {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .qr-status.loading {
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .qr-status.success {
+      color: #00ff88;
+    }
+
+    .qr-status.error {
+      color: #ff4444;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0, 212, 255, 0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Copy button */
+    #download-qr {
+      background: rgba(102, 126, 234, 0.2);
+      border: 2px solid var(--accent);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+      transition: var(--transition);
+      margin-top: 1.5rem;
+      display: none;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    }
+
+    #download-qr:hover {
+      background: rgba(0, 212, 255, 0.1);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    /* Instructions */
+    .instructions {
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .instructions h3 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .instructions ol {
+      margin-left: 1.5rem;
+    }
+
+    .instructions li {
+      margin-bottom: 0.8rem;
+    }
+
+    /* Description text */
+    .desc-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header {
+        padding: 1rem 1.5rem;
+      }
+      
+      .logo-text {
+        font-size: 1.2rem;
+      }
+      
+      body {
+        padding: 90px 15px 120px;
+      }
+      
+      .button-container {
+        flex-direction: column;
+      }
+      
+      .button-container button {
+        width: 100%;
+      }
+      
+      .box {
+        padding: 2rem 1.5rem;
+      }
+
+      .qr-display {
+        min-height: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 1rem;
+      }
+      
+      .box h2 {
+        font-size: 1.8rem;
+      }
+      
+      .button-container button {
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+
+      body {
+        padding: 90px 10px 100px;
+      }
+
+      .box {
+        padding: 1.5rem;
+      }
+
+      .qr-display {
+        padding: 1.5rem;
+        min-height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
+  
+  <!-- Grid Background -->
+  <div class="grid-bg"></div>
+
+  <!-- Header with Logo -->
+  <header class="header">
+    <div class="logo-container">
+      <img src="https://files.catbox.moe/7sfhxn.jpeg" alt="DARK-BOT bot Logo" class="logo-img">
+      <div class="logo-text">DARK-BOT ULTRA PRO MAX</div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- QR Code Section -->
+    <div class="box">
+      <h2><i class="fas fa-qrcode"></i> QR Code Pairing</h2>
+      <h5>Scan the QR code with WhatsApp to connect instantly</h5>
+      <div class="button-container">
+        <button id="generate-qr" onclick="generateQRCode()">
+          <i class="fas fa-sync-alt"></i> Generate QR Code
+        </button>
+        <button id="refresh-qr" onclick="generateQRCode()" style="display: none;">
+          <i class="fas fa-redo"></i> Refresh
+        </button>
+      </div>
+      
+      <div class="qr-display" id="qr-display">
+        <div class="qr-status">
+          <span>Click "Generate QR Code" to start</span>
+        </div>
+      </div>
+
+      <button id="download-qr" onclick="downloadQRCode()">
+        <i class="fas fa-download"></i> Download QR Code
+      </button>
+
+      <p class="desc-text">Fast and secure QR code generation for instant sessions</p>
+    </div>
+
+    <!-- Instructions Section -->
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> How to Use</h3>
+      <ol>
+        <li>Click the "Generate QR Code" button</li>
+        <li>Open WhatsApp on your phone</li>
+        <li>Go to Settings → Linked Devices</li>
+        <li>Tap "Link a Device" and scan the QR code</li>
+        <li>Wait for the connection to establish</li>
+        <li>Your session ID will be automatically sent to your WhatsApp</li>
+        <li>Copy the session ID and use it in your DARK-BOT configuration</li>
+      </ol>
+    </div>
+
+    <!-- Back to Home -->
+    <div class="box" style="text-align: center; padding: 1.5rem;">
+      <button onclick="window.location.href='/'" style="width: 100%; padding: 1rem; background: rgba(102, 126, 234, 0.2); color: var(--accent); border: 2px solid var(--accent); border-radius: var(--radius); cursor: pointer; font-weight: 600; transition: var(--transition);" onmouseover="this.style.background='rgba(102, 126, 234, 0.3)'" onmouseout="this.style.background='rgba(102, 126, 234, 0.2)'">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentQRData = null;
+    let isGenerating = false;
+
+    async function generateQRCode() {
+      if (isGenerating) return;
+      
+      const button = document.getElementById('generate-qr');
+      const display = document.getElementById('qr-display');
+      const downloadBtn = document.getElementById('download-qr');
+      const refreshBtn = document.getElementById('refresh-qr');
+
+      isGenerating = true;
+      button.disabled = true;
+      button.innerHTML = '<div class="spinner"></div> Generating...';
+
+      try {
+        const response = await fetch('/qr');
+        
+        if (!response.ok) {
+          throw new Error('Failed to generate QR code');
+        }
+
+        // Get the QR code image blob
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        
+        currentQRData = url;
+
+        // Display the QR code
+        display.innerHTML = `
+          <img id="qr-image" src="${url}" alt="WhatsApp QR Code" />
+        `;
+
+        // Show download button and refresh button
+        downloadBtn.style.display = 'block';
+        button.style.display = 'none';
+        refreshBtn.style.display = 'block';
+
+        // Add success message
+        const successMsg = document.createElement('div');
+        successMsg.className = 'qr-status success';
+        successMsg.innerHTML = '<i class="fas fa-check-circle"></i> QR Code Generated Successfully!';
+        display.appendChild(successMsg);
+
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+        display.innerHTML = `
+          <div class="qr-status error">
+            <i class="fas fa-exclamation-circle"></i> Error: ${error.message}
+          </div>
+        `;
+        button.style.display = 'block';
+        refreshBtn.style.display = 'none';
+      } finally {
+        isGenerating = false;
+        button.disabled = false;
+        button.innerHTML = '<i class="fas fa-sync-alt"></i> Generate QR Code';
+      }
+    }
+
+    function downloadQRCode() {
+      if (!currentQRData) return;
+
+      const link = document.createElement('a');
+      link.href = currentQRData;
+      link.download = `dark-bot-qr-${new Date().getTime()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Show success feedback
+      const btn = document.getElementById('download-qr');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+      btn.style.boxShadow = '0 0 25px rgba(0, 255, 136, 0.5)';
+      
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.3)';
+      }, 2000);
+    }
+
+    // Auto-refresh QR code every 30 seconds while visible
+    let refreshInterval;
+
+    window.addEventListener('focus', () => {
+      if (currentQRData && !refreshInterval) {
+        refreshInterval = setInterval(() => {
+          if (document.visibilityState === 'visible' && currentQRData) {
+            // Optionally auto-refresh (commented out to avoid excessive API calls)
+            // generateQRCode();
+          }
+        }, 30000);
+      }
+    });
+
+    window.addEventListener('blur', () => {
+      if (refreshInterval) {
+        clearInterval(refreshInterval);
+        refreshInterval = null;
+      }
+    });
+  </script>
+</body>
+</html>
