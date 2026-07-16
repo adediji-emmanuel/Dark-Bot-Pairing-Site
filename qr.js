@@ -33,7 +33,9 @@ const {
 state,
 saveCreds
 } = await useMultiFileAuthState('./temp/' + id)
+console.log("3. Auth state created");
 try {
+    console.log("4. Creating socket...");
 let Qr_Code_By_DarkBot = DarkBot({
 auth: state,
 printQRInTerminal: false,
@@ -42,9 +44,11 @@ level: "silent"
 }),
 browser: Browsers.macOS("Desktop"),
 });
+console.log("5. Socket created");
 
 Qr_Code_By_DarkBot.ev.on('creds.update', saveCreds)
 Qr_Code_By_DarkBot.ev.on("connection.update", async (s) => {
+    console.log("6. connection.update", s);
 const {
 connection,
 lastDisconnect,
@@ -53,8 +57,7 @@ qr
 if (qr) await res.end(await QRCode.toBuffer(qr));
 if (connection == "open") {
 await delay(5000);
-let data = fs.readFileSync(__dirname + /temp/${id}/creds.json);
-await delay(800);
+let data = fs.readFileSync(`${__dirname}/temp/${id}/creds.json`);await delay(800);
 let b64data = Buffer.from(data).toString('base64');
 let session = await Qr_Code_By_DarkBot.sendMessage(Qr_Code_By_DarkBot.user.id, { text: 'DARKBOT~' + b64data });
 

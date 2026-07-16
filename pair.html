@@ -401,12 +401,13 @@
       gap: 4px;
     }
 
-    .bar {
-      width: 6px;
-      background: var(--accent);
-      border-radius: 3px;
-      transition: height 0.2s ease;
-    }
+    .bar{
+    width:6px;
+    height:15px;
+    background:var(--accent);
+    border-radius:20px;
+    transition:height .12s linear;
+}
 
     /* Description text */
     .desc-text {
@@ -491,7 +492,7 @@
     <div class="box">
       <h2><i class="fas fa-qrcode"></i> QR Code Pairing</h2>
       <h5>Scan the QR code with WhatsApp to connect instantly</h5>
-      <button onclick="window.location.href='qr.html'" style="width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; font-family: 'Space Mono', monospace; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); white-space: nowrap; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);">Get QR Code</button>
+      <button onclick="window.location.href='/qr'" style="width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; font-family: 'Space Mono', monospace; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); white-space: nowrap; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);">Get QR Code</button>
       <p class="desc-text">Fast and secure QR code generation for instant sessions</p>
     </div>
 
@@ -516,28 +517,30 @@
       <p class="desc-text">One-click deployment with advanced features</p>
     </div>
 
-    <!-- Music Player -->
-    <div class="music-player">
-      <h3><i class="fas fa-music"></i> Now Playing</h3>
-      <div class="music-title">DARK-BOT Ambient Mix</div>
-      <div class="music-subtitle">Productivity • Lo-Fi • Tech Vibes</div>
-      <button class="play-btn">
-        <i class="fas fa-play"></i>
-      </button>
-      <div class="progress-container">
-        <div class="progress-bar"></div>
-      </div>
-      <div class="time-display">0:00 / 30:00</div>
-      <div class="visualizer">
-        <div class="bar" style="height: 30%;"></div>
-        <div class="bar" style="height: 50%;"></div>
-        <div class="bar" style="height: 40%;"></div>
-        <div class="bar" style="height: 60%;"></div>
-        <div class="bar" style="height: 45%;"></div>
-        <div class="bar" style="height: 55%;"></div>
-      </div>
-    </div>
+<!-- Music Player -->
+<div class="music-player">
+  <h3><i class="fas fa-music"></i> Now Playing</h3>
+
+  <div class="music-title">DARK-BOT Ambient Mix</div>
+  <div class="music-subtitle">Productivity • Lo-Fi • Tech Vibes</div>
+
+  <button class="play-btn" id="play-btn">
+    <i class="fas fa-play" id="play-icon"></i>
+  </button>
+
+  <div class="progress-container" id="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
   </div>
+
+  <div class="time-display">
+    <span id="current-time">0:00</span> /
+    <span id="duration">0:00</span>
+  </div>
+
+  <div class="visualizer" id="visualizer"></div>
+
+  <audio id="audio1" src="https://files.catbox.moe/svi5pb.mp3" preload="metadata" loop></audio>
+</div>
 
   <script>
     async function getPairingCode() {
@@ -582,6 +585,190 @@
         getPairingCode();
       }
     });
+
+
+    const audio = document.getElementById("audio1");
+
+const playBtn = document.getElementById("play-btn");
+const playIcon = document.getElementById("play-icon");
+
+const progressContainer = document.getElementById("progress-container");
+const progressBar = document.getElementById("progress-bar");
+
+const currentTime = document.getElementById("current-time");
+const duration = document.getElementById("duration");
+
+const visualizer = document.getElementById("visualizer");
+
+
+// Create Bars
+for(let i=0;i<35;i++){
+
+    const bar=document.createElement("div");
+
+    bar.className="bar";
+
+    bar.style.height=Math.random()*25+10+"px";
+
+    visualizer.appendChild(bar);
+
+}
+
+const bars=document.querySelectorAll(".bar");
+
+
+// Format Time
+function formatTime(time){
+
+    const min=Math.floor(time/60);
+
+    const sec=Math.floor(time%60);
+
+    return `${min}:${sec.toString().padStart(2,"0")}`;
+
+}
+
+
+// Audio Loaded
+audio.addEventListener("loadedmetadata",()=>{
+
+    duration.textContent=formatTime(audio.duration);
+
+});
+
+
+// Play/Pause
+playBtn.addEventListener("click",()=>{
+
+    if(audio.paused){
+
+        audio.play();
+
+    }else{
+
+        audio.pause();
+
+    }
+
+});
+
+
+// Update Play Button
+audio.addEventListener("play",()=>{
+
+    playIcon.classList.remove("fa-play");
+
+    playIcon.classList.add("fa-pause");
+
+    animateVisualizer();
+
+});
+
+audio.addEventListener("pause",()=>{
+
+    playIcon.classList.remove("fa-pause");
+
+    playIcon.classList.add("fa-play");
+
+});
+
+
+// Update Progress
+audio.addEventListener("timeupdate",()=>{
+
+    currentTime.textContent=formatTime(audio.currentTime);
+
+    const percent=(audio.currentTime/audio.duration)*100;
+
+    progressBar.style.width=percent+"%";
+
+});
+
+
+// Seek Music
+progressContainer.addEventListener("click",(e)=>{
+
+    const rect=progressContainer.getBoundingClientRect();
+
+    const x=e.clientX-rect.left;
+
+    const percent=x/rect.width;
+
+    audio.currentTime=percent*audio.duration;
+
+});
+
+
+// Drag Progress Bar
+let dragging=false;
+
+progressContainer.addEventListener("mousedown",()=>{
+
+    dragging=true;
+
+});
+
+document.addEventListener("mouseup",()=>{
+
+    dragging=false;
+
+});
+
+document.addEventListener("mousemove",(e)=>{
+
+    if(!dragging) return;
+
+    const rect=progressContainer.getBoundingClientRect();
+
+    let x=e.clientX-rect.left;
+
+    x=Math.max(0,Math.min(x,rect.width));
+
+    const percent=x/rect.width;
+
+    progressBar.style.width=percent*100+"%";
+
+    audio.currentTime=percent*audio.duration;
+
+});
+
+
+// Visualizer
+function animateVisualizer(){
+
+    if(audio.paused){
+
+        bars.forEach(bar=>{
+
+            bar.style.height="15px";
+
+        });
+
+        return;
+
+    }
+
+    bars.forEach(bar=>{
+
+        bar.style.height=(Math.random()*45+10)+"px";
+
+    });
+
+    requestAnimationFrame(animateVisualizer);
+
+}
+
+
+// Reset after music ends
+audio.addEventListener("ended",()=>{
+
+    playIcon.classList.remove("fa-pause");
+
+    playIcon.classList.add("fa-play");
+
+});
   </script>
+
+  
 </body>
 </html>

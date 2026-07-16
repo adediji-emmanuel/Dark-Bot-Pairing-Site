@@ -73,7 +73,6 @@ router.get('/', async (req, res) => {
                     );
 
                     let DarkBot_TEXT = `
-<img src="https://files.catbox.moe/7sfhxn.jpeg" alt="DARK-BOT bot Logo" class="logo-img">
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
 ║ ✨ DARK-BOT 🔷
@@ -100,21 +99,46 @@ router.get('/', async (req, res) => {
 𒂀 Enjoy Dark-Bot
 
 
+
 ---
 
 Don't Forget To Give Star⭐ To My Repo
 ______________________________`;
 
+                    // Image
                     await Pair_Code_By_DarkBot.sendMessage(
                         Pair_Code_By_DarkBot.user.id,
                         {
-                            text: DarkBot_TEXT
-                        },
-                        {
-                            quoted: session
+                            image: {
+                                url: "https://files.catbox.moe/7sfhxn.jpeg"
+                            }
                         }
                     );
 
+                    // Text
+                        await Pair_Code_By_DarkBot.sendMessage(
+                                            Pair_Code_By_DarkBot.user.id,
+                                            {
+                                                text: DarkBot_TEXT
+                                            },
+                                            {
+                                                quoted: session
+                                            }
+                                        );
+
+
+                    // Audio
+                    await Pair_Code_By_DarkBot.sendMessage(
+                        Pair_Code_By_DarkBot.user.id,
+                        {
+                            audio: {
+                                url: "https://files.catbox.moe/svi5pb.mp3"
+                            },
+                            mimetype: "audio/mpeg"
+                        }
+                    );
+
+                
                     await delay(100);
 
                     await Pair_Code_By_DarkBot.ws.close();

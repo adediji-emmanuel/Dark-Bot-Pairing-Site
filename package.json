@@ -9,19 +9,19 @@
     "restart": "pm2 restart Dark-Bot"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "npm:wileys",              
     "@adiwajshing/keyed-db": "^0.2.4",
-    "qrcode": "^1.5.3",
+    "@whiskeysockets/baileys": "npm:wileys",
+    "async-mutex": "0.4.1",
     "awesome-phonenumber": "^2.64.0",
-    "pino": "^8.1.0",
-    "phone": "3.1.30",
     "body-parser": "^1.20.1",
     "express": "^4.18.1",
-    "path": "^0.12.7",
-    "pastebin-js": "latest",
-    "megajs": "1.1.7",
-    "pm2": "^6.0.6",
     "jimp": "^0.16.1",
-    "async-mutex": "0.4.1"
+    "megajs": "1.1.7",
+    "pastebin-js": "^0.4.0",
+    "path": "^0.12.7",
+    "phone": "3.1.30",
+    "pino": "^8.1.0",
+    "pm2": "^7.0.3",
+    "qrcode": "^1.5.3"
   }
 }
