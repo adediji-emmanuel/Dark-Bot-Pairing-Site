@@ -6,7 +6,8 @@
   "scripts": {
     "start": "pm2 start arslan.js --deep-monitoring --attach --name Dark-Bot",
     "stop": "pm2 stop Dark-Boy",
-    "restart": "pm2 restart Dark-Bot"
+    "restart": "pm2 restart Dark-Bot",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
@@ -23,5 +24,9 @@
     "pino": "^8.1.0",
     "pm2": "^7.0.3",
     "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1",
+    "postinstall-postinstall": "^2.1.0"
   }
 }
